@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using System;
 using System.Reflection;
 using UnityEngine;
@@ -25,12 +25,9 @@ namespace SeventysRCAirPlaneMod
     public class Plugin : BaseUnityPlugin
     {
         bool inRoom;
-       // NetworkHandler networkHandler;
 
         GameObject launcherInstance;
         GameObject missile;
-
-        GameObject NetworkedMissile;
 
         GameObject missileInstance;
 
@@ -94,11 +91,6 @@ namespace SeventysRCAirPlaneMod
 
             bullet = assetLoadRequest.asset as GameObject;
 
-            assetLoadRequest = myLoadedAssetBundle.LoadAssetAsync<GameObject>("NetworkedPlane");
-            yield return assetLoadRequest;
-
-            NetworkedMissile = assetLoadRequest.asset as GameObject;
-
 
             assetLoadRequest = myLoadedAssetBundle.LoadAssetAsync<GameObject>("HitParticle");
             yield return assetLoadRequest;
@@ -112,12 +104,7 @@ namespace SeventysRCAirPlaneMod
 
             yield return new WaitForSeconds(0.2f);
 
-           //networkHandler = GameObject.Find("Player").AddComponent<NetworkHandler>();
             GameObject.Find("Player").AddComponent<PlayerClass>();
-            //networkHandler.plane = NetworkedMissile;
-            //networkHandler.hitParticle = hitParticle;
-            //networkHandler.deathParticle = deathParticle;
-            //networkHandler.bulletToSpawn = bullet;
             // WOW
 
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -146,9 +133,7 @@ namespace SeventysRCAirPlaneMod
             missileInstance.AddComponent<Missile>().Bullet = bullet;
           
             yield return new WaitForSeconds(0.1f);
-           
-           // FindObjectOfType<NetworkHandler>().SendIDAndSpawn(missileInstance.GetComponent<Missile>().ID);
-            
+                       
         }
         private readonly XRNode lNode = XRNode.LeftHand;
         bool leftPrim;
@@ -207,8 +192,8 @@ namespace SeventysRCAirPlaneMod
     }
 }
 
-
-namespace SolidMonkeys.Patches
+//sus
+namespace SolidMonkeys.Patches 
 {
     [HarmonyPatch(typeof(VRRig))]
     [HarmonyPatch("Start", MethodType.Normal)]
